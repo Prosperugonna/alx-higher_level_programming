@@ -1,16 +1,19 @@
 #!/usr/bin/python3
-# 102-magic_calculation.py
+def safe_function(fct, *args):
+    """safe function
 
+    Args:
+        fct: the pointer to the function
+        args: the arguments
 
-def magic_calculation(a, b):
-    result = 0
-    for i in range(1, 3):
-        try:
-            if i > a:
-                raise Exception('Too far')
-            else:
-                result += a ** b / i
-        except:
-            result = b + a
-            break
-    return (result)
+    Returns:
+        None
+    """
+    import sys
+
+    try:
+        result = fct(*args)
+        return (result)
+    except sys.exc_info()[0]:
+        print("Exception: {}".format(sys.exc_info()[1]), file=sys.stderr)
+        return (None)
