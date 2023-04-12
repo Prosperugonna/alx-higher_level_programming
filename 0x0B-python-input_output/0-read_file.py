@@ -1,17 +1,18 @@
 #!/usr/bin/python3
-"""
-Read file function
-"""
+""" This module that contains a function which reads from a file """
 
 
 def read_file(filename=""):
-    """read a file
-    args:
-        filename: file to manipulate
-    return:
-        na
+    """
+    Function that reads from a file
+
+    Args:
+        filename: filename
+
+    Raises:
+        Exception: when the file can be opened
     """
 
-    with open(filename, encoding="utf-8") as f:
-        for line in f.read():
-            print(line, end="")
+    with open(filename, "r", encoding="utf-8") as f:
+        read_data = f.read()
+        print(read_data, end="")
