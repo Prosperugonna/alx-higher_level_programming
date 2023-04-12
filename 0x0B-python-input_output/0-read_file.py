@@ -1,14 +1,9 @@
 #!/usr/bin/python3
-"""read element from the file"""
+# 0-read_file.py
+"""Defines a text file-reading function."""
 
 
 def read_file(filename=""):
-    """read element to the file
-
-    Args:
-        filename: the file name
-    """
-    with open(filename, encoding="utf-8") as myfile:
-        line = myfile.readlines()
-        for i in line:
-            print(i, end='')
+    """Print the contents of a UTF8 text file to stdout."""
+    with open(filename, encoding="utf-8") as f:
+        print(f.read(), end="")
