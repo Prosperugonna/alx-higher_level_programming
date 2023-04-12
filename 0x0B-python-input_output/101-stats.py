@@ -1,30 +1,33 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+
 import sys
-import io
+import signal
 
-#input = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
-#with open(input, "r", encoding="utf-8") as file:
- #   for line in file:
-  #      print(line)
+# Initialize counters
+total_size = 0
+status_code_counts = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 
-#input = io.TextIOWrapper(sys.stdin , encoding='utf-8')
+# Define signal handler to print stats on keyboard interrupt (CTRL + C)
+def print_stats(signal, frame):
+    print("Total file size: File size: {}".format(total_size))
+    for code, count in sorted(status_code_counts.items()):
+        if count > 0:
+            print("{}: {}".format(code, count))
+    sys.exit(0)
 
-dictstatus = {}
-totalsize = 0
-totalcount = 0
-for line in sys.stdin:
-    split = line.split()
-    status = split[-2]
-    totalsize += int(split[-1])
-    if status in dictstatus.keys():
-        dictstatus[status] += 1
-    else:
-        dictstatus[status] = 1
-    totalcount += 1
-    if totalcount == 10:
-        sortme = sorted(dictstatus.keys())
-        print("File size:", totalsize)
-        for keys in sortme:
-            print("{}: {}".format(keys, dictstatus[keys]))
-        totalcount = 0
+signal.signal(signal.SIGINT, print_stats)
+
+# Read input line by line
+for i, line in enumerate(sys.stdin):
+    try:
+        ip, _, _, _, _, _, _, _, _, status_code, size = line.split()
+        size = int(size)
+        total_size += size
+        status_code_counts[int(status_code)] += 1
+    except ValueError:
         continue
+    if (i+1) % 10 == 0:
+        print("Total file size: File size: {}".format(total_size))
+        for code, count in sorted(status_code_counts.items()):
+            if count > 0:
+                print("{}: {}".format(code, count))
