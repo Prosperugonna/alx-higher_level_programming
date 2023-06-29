@@ -105,5 +105,5 @@ Star Wars API, GitHub API, and Twitter API).
   a search request to the Twitter API `search` endpoint with a given string.
   * Usage: `./103-search_twitter.py <consumer key> <consumer secret> <search string>`
 	* Displays the the top 5 results in the format
-  `[<Tweet ID>] <Tweet text> by <Tweet owner name>`.
+  `[<Tweet ID>] <Tweet text> by <Tweet owner name>`
   * Uses `requests`
